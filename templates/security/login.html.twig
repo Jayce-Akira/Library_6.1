@@ -1,25 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
+{% include "security/nav.html.twig" %}
+<div class="container text-center">
 <form method="post">
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger mt-5">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+    <h1 class="h3 mb-3 fw-bold text-center text-marronFonce mt-5">Connexion</h1>
+    <label for="inputEmail" class="mt-5 text-marronFonce">Email</label>
+    <div class="d-flex justify-content-center">
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control w-75 text-center mt-3" autocomplete="email" required autofocus>
+    </div>
+    <label for="inputPassword" class="mt-5 text-marronFonce">Mot de Passe</label>
+    <div class="d-flex justify-content-center">
+    <input type="password" name="password" id="inputPassword" class="form-control w-75 text-center mt-3" autocomplete="current-password" required>
+    </div>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
@@ -35,8 +40,10 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+    <button class="btn btn-lg btn-sable mt-5 mb-5 text-marronFonce fw-normal" type="submit">
+        Connexion
     </button>
 </form>
+</div>
+{% include "security/footer.html.twig" %}
 {% endblock %}
