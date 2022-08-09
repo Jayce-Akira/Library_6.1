@@ -25,7 +25,8 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => 'Votre prénom',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -34,7 +35,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => 'Votre nom',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -45,7 +47,8 @@ class RegistrationFormType extends AbstractType
                 'type' => EmailType::class,
                 'first_options' => [
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'form-control  text-center',
+                        'placeholder' => 'Votre E-mail',
                     ],
                     'label_attr' => [
                         'class' => 'form-label mt-3',
@@ -54,7 +57,8 @@ class RegistrationFormType extends AbstractType
                 ],
                 'second_options' => [
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'form-control  text-center',
+                        'placeholder' => 'Confirmer votre E-mail',
                     ],
                     'label_attr' => [
                         'class' => 'form-label mt-3',
@@ -63,7 +67,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les E-mail ne correspondent pas',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -71,7 +75,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('address', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => 'Votre addresse',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -80,7 +85,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('zipcode', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => 'Code postal',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -101,7 +107,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('city', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => 'Commune',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -110,7 +117,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => '+33 / 0412131415',
                 ],
                 'constraints' => [
                     new Regex(
@@ -132,7 +140,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('mobile_phone', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control  text-center',
+                    'placeholder' => '+33 / 0612131415',
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-3',
@@ -172,7 +181,8 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => [
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'form-control  text-center',
+                        'placeholder' => 'Mot de passe',
                     ],
                     'label_attr' => [
                         'class' => 'form-label mt-3',
@@ -181,7 +191,8 @@ class RegistrationFormType extends AbstractType
                 ],
                 'second_options' => [
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'form-control  text-center',
+                        'placeholder' => 'Confimer le Mot de passe'
                     ],
                     'label_attr' => [
                         'class' => 'form-label mt-3',
