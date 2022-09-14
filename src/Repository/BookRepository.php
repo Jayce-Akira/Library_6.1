@@ -39,6 +39,37 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+    * @return Book[] Returns an array of Book objects
+    */
+    public function resultBook($value): array
+   {
+       return $this->createQueryBuilder('b')
+            ->select('t', 'b')
+            ->leftJoin('b.type', 't')
+           ->where('t.id = :id')
+           ->setParameter('id', $value)
+           ->orderBy('b.id', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+    /**
+    * @return Book[] Returns an array of Book objects
+    */
+    public function lastTree(): array
+   {
+       return $this->createQueryBuilder('b')
+           ->orderBy('b.id', 'DESC')
+           ->setMaxResults(3)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

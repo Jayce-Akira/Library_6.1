@@ -4,6 +4,7 @@
 
 {% block body %}
 {% include "security/nav.html.twig" %}
+<section>
 <div class="container text-center">
 <form method="post">
     {% if error %}
@@ -45,5 +46,6 @@
     </button>
 </form>
 </div>
+</section>
 {% include "security/footer.html.twig" %}
 {% endblock %}
