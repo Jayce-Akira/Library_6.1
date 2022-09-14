@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Type;
 use App\Form\NatureLivreType;
-use App\Repository\TypeRepository;
+use App\Repository\BookRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,25 +14,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'app_search', methods:['GET', 'POST'])]
-    public function searchType(Request $request, TypeRepository $typeRepository): Response
+    public function searchType(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
 
               
                 
                 $form = $this->createForm(NatureLivreType::class);
         
-                // SELECT * FROM type LEFT JOIN book ON type.id = book.type_id WHERE type.id = 1
                 if($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+                   
+                    $type = $form->get('name')->getData();
+
+                    $typeBook = $bookRepository->resultBook($type);
+
+                } else {
                     
-                    $search = $form->getData();
-                    dd($search);
-                    $types = $typeRepository->searchType($search);
-
-
+                    $type = new Type(); 
+                    $typeBook = $bookRepository->findAll();
+                    
                 }
+
+                $books = $paginator->paginate(
+                    $typeBook,
+                    $request->query->getInt('page', 1),
+                    6
+                );
 
         return $this->render('search/index.html.twig', [
             'searchForm' => $form->createView(),
+            'categories' => $type,
+            'searchResult' => $books,
+            'books' => $bookRepository->lastTree(),
+            
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -178,5 +179,15 @@ class Book
         }
 
         return $this;
+    }
+
+    public function date_published()
+    {
+        return $this->date_published;
+    }
+
+    public function img_cover()
+    {
+        return $this->img_cover;
     }
 }
