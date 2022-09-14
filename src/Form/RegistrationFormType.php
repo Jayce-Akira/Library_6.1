@@ -18,10 +18,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
-    public function buildForm(
-        FormBuilderInterface $builder,
-        array $options
-    ): void {
+    public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('firstname', TextType::class, [
                 'attr' => [

@@ -1,0 +1,28 @@
+<section class="container text-center text-marronClaire w-50">
+  <h1 class="fw-bolder mt-5">
+    Pour rechercher un genre de livre
+  </h1>
+  <div style="margin-top: 100px;">
+
+    {# <form role="search">
+      <div class="d-flex justify-content-center">
+        <input class="form-control w-50"
+          list="datalistOptions"
+          id="exampleDataList"
+          placeholder="Recherche..." />
+        <button class="btn btn-sable text-marronFonce ms-3" type="submit">
+          Recherche
+        </button>
+      </div>
+    </form> #}
+     {{ form(searchForm) }}
+        {# <div class="row mt-5">
+                {{ form_row(searchForm.name) }}
+            </div>
+      <button type="submit" class="btn btn-marronClaire text-sable btn-lg mt-5">
+        rechercher
+      </button>
+      {{ form_end(searchForm) }} #}
+
+  </div>
+</section>

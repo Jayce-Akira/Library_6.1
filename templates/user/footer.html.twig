@@ -2,7 +2,7 @@
   <footer class="py-3 mt-5">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
       <li class="nav-item"><a href="/" class="nav-link px-2 text-marronClaire">Accueil</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-marronClaire">Recherche</a></li>
+      <li class="nav-item"><a href="{{ path('app_search') }}" class="nav-link px-2 text-marronClaire">Recherche</a></li>
       <li class="nav-item"><a href="{{path('user', {id: app.user.id}) }}" class="nav-link px-2 text-marronClaire">Mon compte</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-marronClaire">Réservation</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-marronClaire">Aide</a></li>
