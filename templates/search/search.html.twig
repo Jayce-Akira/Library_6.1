@@ -21,7 +21,7 @@
 
 <div class= "row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5" style="margin-top: 50px;">
  {% for book in searchResult %}
-    <a class="col" href="#" style="text-decoration: none;" data-toggle="popover">
+    <a class="col" href="{{path('book', {id: book.id}) }}" style="text-decoration: none;" data-toggle="popover">
       <div class="card card-cover h-100 overflow-hidden rounded-4 shadow-lg"
         style="background-image: url('{{asset('images/' ~ book.img_cover)}}'); background-position: center; background-repeat: no-repeat; background-size: cover;">
         <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">

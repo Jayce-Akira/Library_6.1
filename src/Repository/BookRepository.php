@@ -69,6 +69,20 @@ class BookRepository extends ServiceEntityRepository
        ;
    }
 
+   public function typeOf($id): array
+   {
+       return $this->createQueryBuilder('b')
+            ->select('t', 'b')
+            ->leftJoin('b.type', 't')
+           ->where('t.id = :id')
+           ->setParameter('id', $id)
+           ->orderBy('b.id', 'DESC')
+           ->setMaxResults(3)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 
 //    /**
 //     * @return Book[] Returns an array of Book objects
