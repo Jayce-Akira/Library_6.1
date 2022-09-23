@@ -38,6 +38,44 @@ class LoanRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+        // SELECT * FROM `loan` LEFT JOIN `user` ON loan.users_id = user.id LEFT JOIN `book`ON loan.book_id = book.id WHERE user.id = 10 AND loan.date_loan IS NOT NULL
+        public function loanUserConfirmed($id){
+            return $this->createQueryBuilder('l')
+            ->leftJoin('l.book', 'b')
+            ->leftJoin('l.users', 'u')
+            ->Where('u.id = :iduser')
+            ->andWhere('l.date_loan is not Null')
+            ->setParameter('iduser', $id)
+            ->getQuery()
+            ->getResult();
+    
+        }
+
+    // SELECT * FROM `loan` LEFT JOIN `user` ON loan.users_id = user.id LEFT JOIN `book`ON loan.book_id = book.id WHERE user.id = 10 AND loan.date_loan IS NULL
+    public function loanUser($id){
+        return $this->createQueryBuilder('l')
+        ->leftJoin('l.book', 'b')
+        ->leftJoin('l.users', 'u')
+        ->Where('u.id = :iduser')
+        ->andWhere('l.date_loan is Null')
+        ->setParameter('iduser', $id)
+        ->getQuery()
+        ->getResult();
+
+    }
+    // SELECT * FROM `loan` LEFT JOIN `user` ON loan.users_id = user.id LEFT JOIN `book` ON loan.book_id = book.id WHERE user.id = ? AND book.id = ?
+    public function loanReserved($idBook, $idUser)
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.book', 'b')
+            ->leftJoin('l.users', 'u')
+            ->where('b.id= :idbook')
+            ->andWhere('u.id = :iduser')
+            ->setParameter('idbook', $idBook)
+            ->setParameter('iduser', $idUser)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Loan[] Returns an array of Loan objects

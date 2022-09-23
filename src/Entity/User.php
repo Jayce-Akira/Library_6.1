@@ -293,4 +293,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->lastname; // Remplacer champ par une propriété "string" de l'entité
+    }
+
+    public function is_confirmed(){
+        return $this->is_confirmed; // Remplacer champ par une propriété "string" de l'entité
+    }
 }
