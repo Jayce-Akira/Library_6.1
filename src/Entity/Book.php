@@ -180,6 +180,9 @@ class Book
 
         return $this;
     }
+    public function __toString(){
+        return $this->title; // Remplacer champ par une propriété "string" de l'entité
+    }
 
     public function date_published()
     {
@@ -189,5 +192,9 @@ class Book
     public function img_cover()
     {
         return $this->img_cover;
+    }
+
+    public function nb_of_book(){
+        return $this->nb_of_book;
     }
 }

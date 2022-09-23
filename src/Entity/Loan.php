@@ -17,13 +17,13 @@ class Loan
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_reserved = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_loan = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_return = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
 
     #[ORM\Column]
@@ -36,6 +36,12 @@ class Loan
     #[ORM\ManyToOne(inversedBy: 'loans')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $users = null;
+
+    public function __construct()
+    {
+        $this->date_reserved = new \DateTimeImmutable();
+        $this->is_late = 0;
+    }
 
     public function getId(): ?int
     {
@@ -125,4 +131,18 @@ class Loan
 
         return $this;
     }
+
+    public function date_reserved(){
+        return $this->date_reserved;
+    }
+
+    public function date_loan(){
+        return $this->date_loan;
+    }
+
+    public function date_return(){
+        return $this->date_return;
+    }
+    
+
 }

@@ -8,12 +8,12 @@
     TITRE DU LIVRE : {{ book.title }}
     </h1>
     <p class = "mt-5">{{ book.description }}</p>
-    <button type="submit" class="btn btn-marronClaire text-sable btn-lg mt-5">
-        Réserver
-    </button>
+    {% if app.user and app.user.is_confirmed and book.nb_of_book > 0 and show_bt %}
+    {{ form(formReserved) }}
+    {% else %}
+     <button type="button" class="btn btn-marronClaire text-sable btn-lg mt-5" disabled>Réservation</button>
+    {% endif %}
     </div>
   </div>
 </div>
 </section>
-{# images/img-de-la-chapelle.jpg #}
-{# images/' ~ book.img_cover #}
