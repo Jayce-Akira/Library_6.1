@@ -144,5 +144,8 @@ class Loan
         return $this->date_return;
     }
     
+    public function is_late(){
+        return $this->is_late;
+    }
 
 }
