@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
 use App\Entity\Loan;
 use App\Repository\BookRepository;
 use App\Repository\LoanRepository;
@@ -17,9 +16,58 @@ class LoanController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/loan', name: 'app_loan', methods:['GET', 'POST'])]
-    public function index(UserInterface $user, LoanRepository $loanRepository, BookRepository $bookRepository): Response
+    public function index(UserInterface $user, LoanRepository $loanRepository, BookRepository $bookRepository, EntityManagerInterface $manager): Response
     {
-        // $idUser = $this->getUser()->getId();
+
+        $filterDateReserved = $loanRepository->loanUser($user);
+        $daysSeconde3days = 60 * 60 * 24 * 4; // je rajoute + 1 afin d'avoir je jour J
+        $timestampPresent = time();
+        $i = 0;
+        foreach($filterDateReserved as $laonDateReserved)
+        {
+            $value[$i]['date_reserved'] = $laonDateReserved->getDateReserved();
+            $value[$i]['id'] = $laonDateReserved->getId();
+            $value[$i]['book'] = $laonDateReserved->getBook();
+            // dd($value[$i]);
+            if( ($value[$i]['date_reserved']->getTimestamp() + $daysSeconde3days) < $timestampPresent ){
+                // Suppression des date de réservation qui dépassent les 3 jours;
+                $loanRepository->deleteLoanDateReserved($value[$i]['date_reserved']);
+                // Incremente le nb de book + 1
+                $book = $value[$i]['book'];
+                $addBook = $book->setNbOfBook($book->getNbOfBook() +1 );
+                $manager->persist($addBook);
+                $manager->flush();
+
+                $this->addFlash(
+                    'warning',
+                    'Vos réservations qui ont dépassé les 3 jours ont été supprimées !'
+                );
+
+            }
+            $i++;
+        }
+
+        $filterDateConfirmed = $loanRepository->loanUserConfirmed($user);
+        $daysSeconde7days = 60 * 60 * 24 * 8; // je rajoute + 1 afin d'avoir le jour J
+        $timestampPresent = time();
+        $i = 0;
+        foreach($filterDateConfirmed as $laonDateConfirmed)
+        {
+            $value[$i]['id'] = $laonDateConfirmed->getId();
+            $value[$i]['date_loan'] = $laonDateConfirmed->getDateLoan();
+            $value[$i]['is_late'] = $laonDateConfirmed->isIsLate();
+            if( (($value[$i]['date_loan']->getTimestamp() + $daysSeconde7days) < $timestampPresent) AND $value[$i]['is_late'] != 1 ){
+
+                $loanRepository->updateLate($value[$i]['date_loan']);
+
+                $this->addFlash(
+                    'danger',
+                    'Vos prêt doit être rendu au plus vite !'
+                );
+
+            }
+            $i++;
+        }
 
         $loanUser = $loanRepository->loanUser($user);
 

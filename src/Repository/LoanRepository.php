@@ -38,9 +38,33 @@ class LoanRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    // Update pour les pret en retard
+    public function updateLate($date){
+        return $this->createQueryBuilder('l')
+        ->update()
+        ->set('l.is_late', 1)
+        ->where('l.date_loan =:date')
+        ->andWhere('l.is_late = 0' )
+        ->setParameter(':date', $date)
+        ->getQuery()
+        ->getResult();
+    }
+
+    // on supprime les livres reserve non recupere
+    public function deleteLoanDateReserved($date){
+        return $this->createQueryBuilder('l')
+        ->delete()
+        ->where('l.date_reserved = :date')
+        ->andWhere('l.date_loan is Null')
+        ->setParameter(':date', $date)
+        ->getQuery()
+        ->getResult();
+    }
+
         // SELECT * FROM `loan` LEFT JOIN `user` ON loan.users_id = user.id LEFT JOIN `book`ON loan.book_id = book.id WHERE user.id = 10 AND loan.date_loan IS NOT NULL
-        public function loanUserConfirmed($id){
-            return $this->createQueryBuilder('l')
+    public function loanUserConfirmed($id){
+        return $this->createQueryBuilder('l')
             ->leftJoin('l.book', 'b')
             ->leftJoin('l.users', 'u')
             ->Where('u.id = :iduser')
@@ -48,8 +72,7 @@ class LoanRepository extends ServiceEntityRepository
             ->setParameter('iduser', $id)
             ->getQuery()
             ->getResult();
-    
-        }
+    }    
 
     // SELECT * FROM `loan` LEFT JOIN `user` ON loan.users_id = user.id LEFT JOIN `book`ON loan.book_id = book.id WHERE user.id = 10 AND loan.date_loan IS NULL
     public function loanUser($id){
