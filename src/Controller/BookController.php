@@ -31,8 +31,28 @@ class BookController extends AbstractController
         if (empty($loanRepository->loanReserved($idBook, $idUser))){
          $show_bt = true;
         } else {
-         $show_bt = false;  
+         $show_bt = false; 
+         $this->addFlash(
+            'warning',
+            'Vous avez déjà réservé le livre !'
+        );
         }
+        
+        // $UserConfirmed = $user->isIsConfirmed();
+        if($user->isIsConfirmed() === false ){
+            $this->addFlash(
+                'warning',
+                'Vous devez être confirmé par l\'administration pour réserver un livre !'
+            );
+        }
+
+        if( $book->getNbOfBook() === 0 AND $user->isIsConfirmed() === true AND $show_bt === true){
+            $this->addFlash(
+                'warning',
+                'Votre livres est momentanément indisponible !'
+            );
+        }
+        
     
         // création du formulaire pour enregistrer la réservation
         $loan = new Loan();
@@ -70,6 +90,11 @@ class BookController extends AbstractController
         $book = $bookRepository->find($id);
         // Les 3 dernieres nouveauté de la même categorie du livre
         $idType = $book->getType()->getId();
+
+        $this->addFlash(
+            'warning',
+            'Vous devez être enregistrez pour faire des réservations !'
+        );
 
 
         return $this->render('book/index.html.twig', [
