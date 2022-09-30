@@ -19,6 +19,11 @@ class LoanController extends AbstractController
     public function index(UserInterface $user, LoanRepository $loanRepository, BookRepository $bookRepository, EntityManagerInterface $manager): Response
     {
 
+        $loanUser = $loanRepository->loanUser($user);
+
+        $loanUserConfirmed = $loanRepository->loanUserConfirmed($user);
+
+        // Suppression des livres réservés non récupérés
         $filterDateReserved = $loanRepository->loanUser($user);
         $daysSeconde3days = 60 * 60 * 24 * 4; // je rajoute + 1 afin d'avoir je jour J
         $timestampPresent = time();
@@ -47,31 +52,30 @@ class LoanController extends AbstractController
             $i++;
         }
 
+
+        // Message flash pour l'utilisateur qui n'a pas rendu les livres 
         $filterDateConfirmed = $loanRepository->loanUserConfirmed($user);
-        $daysSeconde7days = 60 * 60 * 24 * 8; // je rajoute + 1 afin d'avoir le jour J
-        $timestampPresent = time();
         $i = 0;
         foreach($filterDateConfirmed as $laonDateConfirmed)
         {
             $value[$i]['id'] = $laonDateConfirmed->getId();
-            $value[$i]['date_loan'] = $laonDateConfirmed->getDateLoan();
+            $value[$i]['date_return'] = $laonDateConfirmed->getDateReturn();
             $value[$i]['is_late'] = $laonDateConfirmed->isIsLate();
-            if( (($value[$i]['date_loan']->getTimestamp() + $daysSeconde7days) < $timestampPresent) AND $value[$i]['is_late'] != 1 ){
 
-                $loanRepository->updateLate($value[$i]['date_loan']);
+            if(  $value[$i]['date_return'] != null AND (($value[$i]['date_return']->getTimestamp()) < time()) AND $value[$i]['is_late'] != 1){
+
+                $loanRepository->updateLateReturn($value[$i]['date_return']);
 
                 $this->addFlash(
                     'danger',
                     'Vos prêt doit être rendu au plus vite !'
                 );
-
+                return $this->redirectToRoute('app_loan');
             }
             $i++;
         }
 
-        $loanUser = $loanRepository->loanUser($user);
 
-        $loanUserConfirmed = $loanRepository->loanUserConfirmed($user);
 
         return $this->render('loan/index.html.twig', [
             'loanUser' => $loanUser,

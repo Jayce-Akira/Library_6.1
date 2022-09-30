@@ -6,7 +6,7 @@ La Réserve de la Chapelle (la médiathèque de La Chapelle-Curreaux) est un sit
 
 ### Pré-requis
 
-* Symfony 6.0
+* Symfony 6.1
 * PHP 8.1
 * Composer
 * Symfony CLI
