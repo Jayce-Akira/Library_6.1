@@ -39,17 +39,17 @@ class LoanRepository extends ServiceEntityRepository
         }
     }
 
-    // Update pour les pret en retard
-    public function updateLate($date){
-        return $this->createQueryBuilder('l')
+    // Update pour les pret en retard par la date de retour mis par l'admin
+    public function updateLateReturn($date){
+    return $this->createQueryBuilder('l')
         ->update()
         ->set('l.is_late', 1)
-        ->where('l.date_loan =:date')
-        ->andWhere('l.is_late = 0' )
+        ->where('l.date_return =:date')
+        ->andWhere('l.is_late = 0')
         ->setParameter(':date', $date)
         ->getQuery()
         ->getResult();
-    }
+    }   
 
     // on supprime les livres reserve non recupere
     public function deleteLoanDateReserved($date){

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Loan;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -38,13 +39,23 @@ class LoanCrudController extends AbstractCrudController
                 AssociationField::new('book', 'Livre'),
                 DateField::new('date_reserved', 'date de réservation')
                     ->setFormTypeOption('disabled', 'disabled'),
-                DateField::new('date_loan', 'date du prêt'),
-                DateField::new('date_return', 'date de retour'),
+                DateField::new('date_loan', 'date du prêt')
+                ->hideOnForm()
+                ->setFormTypeOption('disabled', 'disabled'),
+                DateField::new('date_return', 'date de retour')
+                ->hideOnForm()
+                ->setFormTypeOption('disabled', 'disabled'),
                 TextField::new('status'),
                 BooleanField::new('is_late', 'Retard'),
     
             ];
+
+
+
+
         }
+
+    
         return [
             IdField::new('id')
                 ->hideOnForm(),
@@ -54,12 +65,36 @@ class LoanCrudController extends AbstractCrudController
                 ->setFormTypeOption('disabled', 'disabled'),
             DateField::new('date_reserved', 'date de réservation')
                 ->setFormTypeOption('disabled', 'disabled'),
-            DateField::new('date_loan', 'date du prêt'),
-            DateField::new('date_return', 'date de retour'),
+            DateField::new('date_loan', 'date du prêt')
+                ->setFormTypeOption('required', 'required'),
+            DateField::new('date_return', 'date de retour')
+                ->setFormTypeOption('required', 'required'),
             TextField::new('status'),
             BooleanField::new('is_late', 'Retard'),
 
         ];
+
+        
+    }
+
+    public function persistEntity(EntityManagerInterface $manager, $entityInstance): void
+    {
+        if(!$entityInstance instanceof Loan) return;
+
+        $entityInstance->getBook()->setNbOfBook($entityInstance->getBook()->getNbOfBook() -1 );
+
+        parent::persistEntity($manager, $entityInstance);
+
+    }
+
+    public function deleteEntity(EntityManagerInterface $manager, $entityInstance): void
+    {
+        if(!$entityInstance instanceof Loan) return;
+
+        $entityInstance->getBook()->setNbOfBook($entityInstance->getBook()->getNbOfBook() +1 );
+
+        parent::deleteEntity($manager, $entityInstance);
+
     }
     
     /*
