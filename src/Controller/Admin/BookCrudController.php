@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -41,10 +43,12 @@ class BookCrudController extends AbstractCrudController
             TextField::new('editor', 'Editeur'),
             IntegerField::new('nb_of_book', 'Nombre de livre'),
             AssociationField::new('type','Catégorie'),
-            TextEditorField::new('description', 'Déscritption')
+            TextareaField::new('description', 'Déscritption')
             ->hideOnIndex(),
             TextField::new('img_cover', 'Image de couverture')
                 ->hideOnIndex(),
+            TextField::new('imageFile', 'Image de couverture')->setFormType(VichImageType::class),
+            ImageField::new('img_cover')->setBasePath('/images/books/')->onlyOnIndex(),
             
         ];
     }

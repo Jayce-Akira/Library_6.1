@@ -24,13 +24,13 @@
     {% for book in searchResult %}
         <a class="col" href="{{path('book', {id: book.id}) }}" style="text-decoration: none;" data-toggle="popover">
           <div class="card card-cover h-100 overflow-hidden rounded-4 shadow-lg"
-            style="background-image: url('{{asset('images/' ~ book.img_cover)}}'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+            style="background-image: url('{{ vich_uploader_asset(book, 'imageFile')}}'); background-position: center; background-repeat: no-repeat; background-size: cover;">
             <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-              <h2 class="mb-4 display-6 lh-1 fw-bold text-marronFonce d-flex justify-content-center">
+              <h2 class="mb-4 display-6 lh-1 fw-bold text-dark d-flex justify-content-center">
               {{ book.title }}
               </h2>
-              <p class="mb-0 text-marronFonce d-flex justify-content-center" style="margin-top: 50px;"> {{ book.description|u.truncate(150, '...', false) }}</p>
-              <p class="h6 text-uppercase mb-0 ms-auto text-marronFonce" style="margin-top: 50px;">
+              <p class="mb-0 text-dark d-flex justify-content-center" style="margin-top: 50px;"> {{ book.description|u.truncate(150, '...', false) }}</p>
+              <p class="h6 text-uppercase mb-0 ms-auto text-dark" style="margin-top: 50px;">
                   <time datetime="2019-05-02">Publiée le {{book.date_published|date('d/m/Y')}}</time>
                 </p>
             </div>
@@ -60,13 +60,13 @@
     {% for book in searchResult %}
         <a class="col" href="{{path('no_book', {id: book.id}) }}" style="text-decoration: none;" data-toggle="popover">
           <div class="card card-cover h-100 overflow-hidden rounded-4 shadow-lg"
-            style="background-image: url('{{asset('images/' ~ book.img_cover)}}'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+            style="background-image: url('{{ vich_uploader_asset(book, 'imageFile')}}'); background-position: center; background-repeat: no-repeat; background-size: cover;">
             <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-              <h2 class="mb-4 display-6 lh-1 fw-bold text-marronFonce d-flex justify-content-center">
+              <h2 class="mb-4 display-6 lh-1 fw-bold text-dark d-flex justify-content-center">
               {{ book.title }}
               </h2>
-              <p class="mb-0 text-marronFonce d-flex justify-content-center" style="margin-top: 50px;"> {{ book.description|u.truncate(150, '...', false) }}</p>
-              <p class="h6 text-uppercase mb-0 ms-auto text-marronFonce" style="margin-top: 50px;">
+              <p class="mb-0 text-dark d-flex justify-content-center" style="margin-top: 50px;"> {{ book.description|u.truncate(150, '...', false) }}</p>
+              <p class="h6 text-uppercase mb-0 ms-auto text-dark" style="margin-top: 50px;">
                   <time datetime="2019-05-02">Publiée le {{book.date_published|date('d/m/Y')}}</time>
                 </p>
             </div>

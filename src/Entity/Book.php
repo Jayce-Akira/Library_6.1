@@ -8,8 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[Vich\Uploadable]
 class Book
 {
     #[ORM\Id]
@@ -22,6 +25,10 @@ class Book
 
     #[ORM\Column(length: 255)]
     private ?string $img_cover = null;
+
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'books', fileNameProperty: 'img_cover')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -78,6 +85,18 @@ class Book
 
         return $this;
     }
+
+    public function setImageFile(?File $img_cover = null): void
+    {
+        $this->imageFile = $img_cover;
+
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
 
     public function getDescription(): ?string
     {
