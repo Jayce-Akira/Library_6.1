@@ -6,7 +6,7 @@
 {% endfor %}
 <div class="container">
   <div class="row">
-    <div class="col-6" style="background-image: url('{{asset('images/' ~ book.img_cover)}}'); background-position: center; background-repeat: no-repeat; background-size: cover; width=auto; height: 510px;">
+    <div class="col-6" style="background-image: url('{{ vich_uploader_asset(book, 'imageFile')}}'); background-position: center; background-repeat: no-repeat; background-size: cover; width=auto; height: 510px;">
     </div>
     <div class="col-6 text-center">
     <h1 class = "mt-3">
