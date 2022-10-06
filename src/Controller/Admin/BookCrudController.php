@@ -45,8 +45,6 @@ class BookCrudController extends AbstractCrudController
             AssociationField::new('type','Catégorie'),
             TextareaField::new('description', 'Déscritption')
             ->hideOnIndex(),
-            TextField::new('img_cover', 'Image de couverture')
-                ->hideOnIndex(),
             TextField::new('imageFile', 'Image de couverture')->setFormType(VichImageType::class),
             ImageField::new('img_cover')->setBasePath('/images/books/')->onlyOnIndex(),
             

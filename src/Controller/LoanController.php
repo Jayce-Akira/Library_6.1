@@ -25,7 +25,7 @@ class LoanController extends AbstractController
 
         // Suppression des livres réservés non récupérés
         $filterDateReserved = $loanRepository->loanUser($user);
-        $daysSeconde3days = 60 * 60 * 24 * 4; // je rajoute + 1 afin d'avoir je jour J
+        $daysSeconde3days = 60 * 60 * 24 * 4; // je rajoute + 1 afin d'avoir le jour J
         $timestampPresent = time();
         $i = 0;
         foreach($filterDateReserved as $laonDateReserved)
